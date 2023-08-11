@@ -1,0 +1,20 @@
+{
+  "/api/*": {
+    "target": "http://unicorn:6969/api/v0",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite":{
+      "^/api": ""
+    }
+  },
+  "/api/categories/1": {
+    "target": "http://unicorn:6969/api/v0",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite":{
+      "^/api/": ""
+    }
+  }
+}
