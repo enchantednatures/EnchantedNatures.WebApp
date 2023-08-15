@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Category } from './category';
-import { Observable, catchError, map, of, tap } from 'rxjs';
-import { CategoryPhotos } from './category-photos';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http'
+import {Category} from './category';
+import {Observable, catchError, map, of, tap} from 'rxjs';
+import {CategoryPhotos} from './category-photos';
+import {Photo} from "./photo";
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,14 @@ export class PhotoService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+  }
 
   getCategories(): Observable<Category[]> {
     return this.http
       .get<Category[]>(
         "api/categories",
-        { responseType: "json" },
+        {responseType: "json"},
       ).pipe(
         map(h => h),
         tap(
@@ -31,8 +33,8 @@ export class PhotoService {
   getCategoryPhotos(id: number): Observable<CategoryPhotos> {
     return this.http
       .get<CategoryPhotos>(
-        `api/categories/${ id }`,
-        { responseType: "json" },
+        `api/categories/${id}`,
+        {responseType: "json"},
       ).pipe(
         map(h => h),
         tap(
@@ -43,6 +45,16 @@ export class PhotoService {
       );
   }
 
+  getPhoto(id: number): Observable<Photo> {
+    return this.http.get<Photo>(`api/photos/${id}`, {responseType: "json"}).pipe(
+    map(h=>h),
+      tap(h=> {
+        const outcome = h ? 'fetched' : 'did not find';
+      }),
+      catchError(this.handleError<Photo>("unable to get photo"))
+    )
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
@@ -51,5 +63,6 @@ export class PhotoService {
     };
   }
 
-  private log(message: string) { }
+  private log(message: string) {
+  }
 }

@@ -7,13 +7,15 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HorizontalScrollDirective } from './horizontal-scroll.directive';
+import { StudioComponent } from './studio/studio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GalleryComponent,
     NavMenuComponent,
-    HorizontalScrollDirective
+    HorizontalScrollDirective,
+    StudioComponent
   ],
   imports: [
     HttpClientModule,

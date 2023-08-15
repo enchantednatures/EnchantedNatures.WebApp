@@ -5,11 +5,11 @@
       <div *ngIf="categories && this.isExpanded" class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="controller-link">
-            <a >enchanted natures</a>
+            <a>enchanted natures</a>
           </li>
           <ng-container *ngFor="let category of categories">
             <li class="controller-link">
-              <a >{{category.name}}</a>
+              <a [routerLink]="['/gallery']" [queryParams]="{category:category.id}">{{category.name}}</a>
             </li>
           </ng-container>
         </ul>

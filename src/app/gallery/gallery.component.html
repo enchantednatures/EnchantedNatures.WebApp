@@ -1,8 +1,7 @@
-<p ><em>Loading...</em></p>
 <p *ngIf="!photos.length"><em>Loading...</em></p>
 <div *ngIf="photos" (wheel)="onScroll($event)" class="gallery-body" id="gallery-piece" appHorizontalScroll>
   <div *ngFor="let photo of photos">
-    <a [routerLink]="['/studio', photo.id]">
+    <a [routerLink]="['/studio']" [queryParams]="{photo: photo.id}">
       <img alt="{{photo.title}}" class="gallery-image" src="assets/img/{{photo.filename}}"/>
     </a>
   </div>

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Category } from '../category';
-import { PhotoService } from '../photo.service';
+import {Component, OnInit} from '@angular/core';
+import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Category} from '../category';
+import {PhotoService} from '../photo.service';
+import {NavService} from '../nav.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -27,14 +28,16 @@ import { PhotoService } from '../photo.service';
   ]
 })
 export class NavMenuComponent implements OnInit {
+  public categories: Category[];
   get isExpanded(): boolean {
-    return true;
+    return this.nav.isVisible;
   }
 
-  public categories: Category[];
+
 
   constructor(
     private photoService: PhotoService,
+    private nav: NavService,
   ) {
     this.categories = [];
   }
