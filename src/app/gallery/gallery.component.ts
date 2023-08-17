@@ -32,10 +32,15 @@ export class GalleryComponent implements OnInit {
   }
 
   ngOnInit() {
+    let categoryId: number = 1;
+    this.route.queryParams.subscribe(params => {
+      categoryId = params['category'];
+    });
+    this.getPhotosForCategory(categoryId);
     this.router.events
       .subscribe((_) => {
         // code goes here...
-        let categoryId: number = 1;
+
         this.route.queryParams.subscribe(params => {
           categoryId = params['category'];
         });
