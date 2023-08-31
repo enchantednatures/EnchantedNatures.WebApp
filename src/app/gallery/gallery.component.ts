@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {filter} from "rxjs/operators";
-import {NavService} from '../nav.service';
-import {PhotoService} from '../photo.service';
-import {Photo} from '../photo';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavService } from '../nav.service';
+import { PhotoService } from '../photo.service';
+import { Photo } from '../photo';
 
 
 @Component({
@@ -28,6 +27,7 @@ export class GalleryComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       categoryId = params['category'];
     });
+    categoryId = categoryId ?? 1;
     this.getPhotosForCategory(categoryId);
   }
 
@@ -36,6 +36,7 @@ export class GalleryComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       categoryId = params['category'];
     });
+    categoryId = categoryId ?? 1;
     this.getPhotosForCategory(categoryId);
     this.router.events
       .subscribe((_) => {
