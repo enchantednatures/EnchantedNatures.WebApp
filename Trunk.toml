@@ -1,0 +1,9 @@
+[build]
+target = "index.html"
+dist = "dist"
+
+[clean]
+# The output dir for all final assets.
+dist = "dist"
+cargo = true
+
