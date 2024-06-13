@@ -1,8 +1,13 @@
 name: Enchanted Natures Cloudflare Pages
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+  pull-requests: write
 on:
   workflow_dispatch:
     inputs:
-     environment:
+      environment:
         type: environment
         description: Select the environment
   push:
