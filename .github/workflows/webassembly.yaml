@@ -9,6 +9,7 @@ on:
       - "**.png"
       - "**cd.yml"
 jobs:
+  environment: Production
   build:
     runs-on: ubuntu-latest
     steps:
