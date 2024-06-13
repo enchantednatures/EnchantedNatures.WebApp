@@ -2,15 +2,10 @@ name: Enchanted Natures Cloudflare Pages
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        type: choice
+     environment:
+        type: environment
         description: Select the environment
-        required: true
-        options:
-          - Production
   push:
-    inputs:
-      environment: Production
     branches:
       - main
     paths-ignore:
