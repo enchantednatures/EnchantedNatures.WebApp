@@ -3,6 +3,7 @@ permissions:
   id-token: write
   contents: read
   issues: write
+  deployments: write
   pull-requests: write
 on:
   workflow_dispatch:
