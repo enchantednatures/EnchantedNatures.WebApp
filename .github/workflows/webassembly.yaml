@@ -1,7 +1,16 @@
 name: Enchanted Natures Cloudflare Pages
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Select the environment
+        required: true
+        options:
+          - Production
   push:
+    inputs:
+      environment: Production
     branches:
       - main
     paths-ignore:
@@ -9,9 +18,9 @@ on:
       - "**.png"
       - "**cd.yml"
 jobs:
-  environment: Production
   build:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v1
       - name: Setup toolchain
