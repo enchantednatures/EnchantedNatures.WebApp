@@ -1,8 +1,17 @@
-name: Trunk Build
+
+name: Enchanted Natures Cloudflare Pages
 permissions:
   id-token: write
+  contents: read
+  issues: write
+  deployments: write
+  pull-requests: write
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        description: Select the environment
   push:
     branches:
       - main
@@ -35,9 +44,12 @@ jobs:
       - name: Build
         run: |
           trunk build --release
-
-      - name: Upload Binary
-        uses: actions/upload-artifact@v4
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
         with:
-          name: dist
-          path: dist/
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: enchantednatures
+          directory: dist/
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
