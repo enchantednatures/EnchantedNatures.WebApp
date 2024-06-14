@@ -1,5 +1,5 @@
-
-name: Enchanted Natures Cloudflare Pages
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Trunk Build and Deploy to Cloudflare
 permissions:
   id-token: write
   contents: read
@@ -46,6 +46,7 @@ jobs:
           trunk build --release
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
+        if: ${{ inputs.environment }} == Production
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
