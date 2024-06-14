@@ -1,8 +1,18 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
 name: Trunk Build
 permissions:
   id-token: write
+  contents: read
+  issues: write
+  deployments: write
+  pull-requests: write
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        description: Select the environment
   push:
     branches:
       - main
@@ -35,9 +45,13 @@ jobs:
       - name: Build
         run: |
           trunk build --release
-
-      - name: Upload Binary
-        uses: actions/upload-artifact@v4
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        if: ${{ inputs.environment }} == Production
         with:
-          name: dist
-          path: dist/
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: enchantednatures
+          directory: dist/
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
