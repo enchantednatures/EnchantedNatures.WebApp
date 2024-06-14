@@ -1,6 +1,5 @@
-use leptos::*;
-
 use enchanted_natures_web_app::App;
+use leptos::*;
 
 fn main() {
     _ = console_log::init_with_level(log::Level::Debug);

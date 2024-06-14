@@ -1,9 +1,12 @@
 use leptos::*;
 use leptos_router::*;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
+use serde::Serialize;
 
 use crate::directives::horizontal_scroll;
-use crate::{get_photos, PhotoViewModel, PhotoViewModel2};
+use crate::get_photos;
+use crate::PhotoViewModel;
+use crate::PhotoViewModel2;
 
 #[derive(Params, PartialEq)]
 struct GalleryParams {

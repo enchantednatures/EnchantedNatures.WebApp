@@ -1,12 +1,11 @@
-use reqwest::Client;
+use std::collections::HashMap;
+use std::sync::LazyLock;
 
 use chrono::NaiveDate;
-use serde::{Deserialize, Serialize};
+use reqwest::Client;
+use serde::Deserialize;
+use serde::Serialize;
 use serde_json::json;
-
-use std::collections::HashMap;
-
-use std::sync::LazyLock;
 
 pub static CLOUDFLARE_RESOURCES: LazyLock<HashMap<usize, String>> = LazyLock::new(|| {
     let mut m = HashMap::new();

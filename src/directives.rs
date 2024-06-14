@@ -1,4 +1,7 @@
-use leptos::{ev::wheel, html::AnyElement, logging, HtmlElement};
+use leptos::ev::wheel;
+use leptos::html::AnyElement;
+use leptos::logging;
+use leptos::HtmlElement;
 
 pub fn horizontal_scroll(el: HtmlElement<AnyElement>) {
     _ = el.clone().on(wheel, move |e| {
