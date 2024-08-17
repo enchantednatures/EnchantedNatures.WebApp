@@ -9,6 +9,7 @@
     <link data-trunk rel="rust" data-wasm-opt="z" />
     <link data-trunk rel="icon" type="image/ico" href="/public/favicon.ico" />
     <link data-trunk rel="css" href="/public/styles.css" />
+    <!-- <link data-trunk rel="inline" type="js" href="/public/scripts.js" /> -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
@@ -39,4 +40,42 @@
   <div class="footer text-muted offset-lg-5 offset-md-3 copyright">
     &copy; 2024 - enchanted natures
   </div>
+  <script>
+    window.onload = function () {
+      console.log("loaded");
+      (function (document, window, index) {
+        "use strict";
+        var elWidth = 0,
+          elLeft = 0,
+          dWidth = 0,
+          wWidth = 0,
+          wScrollCurrent = 0,
+          wScrollBefore = 0,
+          wScrollDiff = 0;
+        window.addEventListener("scroll", function () {
+          let element = document.querySelector(".sidebar");
+          if (!element) return true;
+          elWidth = element.offsetWidth ? element.offsetWidth : 0;
+          dWidth = document.body.offsetWidth;
+          wWidth = window.innerWidth;
+          wScrollCurrent = window.pageXOffset;
+          wScrollDiff = wScrollBefore - wScrollCurrent;
+          elLeft =
+            parseInt(window.getComputedStyle(element).left) + wScrollDiff;
+          if (wScrollCurrent <= 0) {
+            // scrolled to the very left; element sticks to the left
+            element.style.left = "0px";
+          } else if (wScrollDiff > 0) {
+            // scrolled up; element slides in
+            element.style.left = (elLeft > 0 ? 0 : elLeft) + "px";
+          } else if (wScrollDiff < 0) {
+            // scrolled down
+            element.style.left =
+              (Math.abs(elLeft) > elWidth ? -elWidth : elLeft) + "px";
+          }
+          wScrollBefore = wScrollCurrent;
+        });
+      })(document, window, 0);
+    };
+  </script>
 </html>
