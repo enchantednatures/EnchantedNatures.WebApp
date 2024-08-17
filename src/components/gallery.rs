@@ -77,7 +77,6 @@ pub fn GalleryPiece(photo: PhotoViewModel2) -> impl IntoView {
 
 #[component]
 pub fn Gallery(children: Children) -> impl IntoView {
-    logging::log!("gallery");
     view! {
         <div class="gallery-body" id="gallery-piece" use:horizontal_scroll>
             {children()}

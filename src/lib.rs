@@ -12,22 +12,6 @@ use self::components::studio::StudioPage;
 #[component]
 pub fn App() -> impl IntoView {
     let categories_resource = create_resource(|| (), |_| async move { get_categories().await });
-
-    // let photo_view = {
-    //     move || {
-    //         match photos.get() {
-    //             None => view! { <p>"Loading..."</p> }.into_view(),
-    //             Some(data) => data
-    //                 .photos
-    //                 .into_iter()
-    //                 .map(|photo| {
-    //                     view! { <GalleryPiece photo/> }
-    //                 })
-    //                 .collect_view(),
-    //         }
-    //         .into_view()
-    //     }
-    // };
     let categories = {
         move || match categories_resource.get() {
             None => view! { <p>"Loading..."</p> }.into_view(),
@@ -36,10 +20,7 @@ pub fn App() -> impl IntoView {
                 .map(|category| {
                     view! {
                         <li class="controller-link">
-                            <A href=format!(
-                                "/gallery/{}",
-                                category.id,
-                            )>{category.name}</A>
+                            <A href=format!( "/gallery/{}", category.id,)>{category.name}</A>
                         </li>
                     }
                 })
@@ -52,7 +33,7 @@ pub fn App() -> impl IntoView {
             <div class="row">
                 <Router>
                     <nav class="col-md-3 col-lg-2 bg-white sidebar">
-                        <div class="sidebar-sticky pt-3">
+                        <div id="sidebar-nav" class="sidebar-sticky pt-3">
                             <ul class="nav flex-column">
                                 <li class="controller-link">
                                     <A href="/">enchanted natures</A>

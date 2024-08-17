@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::sync::LazyLock;
 
 use chrono::NaiveDate;
-use reqwest::Client;
 use serde::Deserialize;
 use serde::Serialize;
 use serde_json::json;
@@ -327,34 +326,3 @@ pub async fn get_categories() -> Vec<CategoryViewModel> {
         })
         .collect()
 }
-
-/*
-
-pub async fn get_photo(photo_id: usize) -> PhotoViewModel {
-    let url = format!("http://127.0.0.1:6969/api/v0/photos/{}", photo_id);
-    // let resp = reqwest::get(url).await.unwrap();
-    let resp = Client::new().get(url).send().await.unwrap();
-    // let resp = Client::new()::get(url).await.unwrap();
-    let photo: PhotoViewModel = resp.json().await.unwrap();
-    photo
-}
-
-pub async fn get_categories() -> Vec<CategoryViewModel> {
-    let url = "http://127.0.0.1:6969/api/v0/categories";
-    // let resp = reqwest::get(url).await.unwrap();
-    let resp = Client::new().get(url).send().await.unwrap();
-    // let resp = Client::new()::get(url).await.unwrap();
-    let categories: Vec<CategoryViewModel> = resp.json().await.unwrap();
-    categories
-}
-
-pub async fn get_photos(category_id: usize) -> GalleryViewModel {
-    let url = format!("http://127.0.0.1:6969/api/v0/categories/{}", category_id);
-    // let resp = reqwest::get(url).await.unwrap();
-    let resp = Client::new().get(url).send().await.unwrap();
-    // let resp = Client::new()::get(url).await.unwrap();
-    let photos: GalleryViewModel = resp.json().await.unwrap();
-    dbg!(&photos);
-    photos
-}
-*/
