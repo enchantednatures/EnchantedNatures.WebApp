@@ -12,7 +12,6 @@ opt-level = 1
 [profile.dev.package."*"]
 opt-level = 3
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [profile.wasm-release]
 inherits = "release"
 opt-level = 'z'
@@ -20,22 +19,23 @@ lto = true
 codegen-units = 1
 
 [dependencies]
-leptos = { version = "0.6", features = ["csr", "nightly"] }
-leptos-use = { version = "0.12" }
-leptos_router = { version = "0.6", features = ["csr", "nightly"] }
-serde = { version = "1", features = ["derive"] }
+leptos = { version = "0.8", features = ["csr", "nightly"] }
+leptos-use = { version = "0.18" }
+leptos_router = { version = "0.8", features = ["nightly"] }
+serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.13", features = ["json"] }
 
 wasm-bindgen = { version = "0.2" }
+web-sys = { version = "0.3" }
 console_log = { version = "1"}
 console_error_panic_hook = { version = "0.1"}
-uuid = { version = "1.6.1", features = ["serde", "v4"] }
-leptos_meta = { version = "0.6", features = ["csr", "nightly"] }
-gloo-net = "0.6.0"
+uuid = { version = "1", features = ["serde", "v4", "js"] }
+leptos_meta = { version = "0.8" }
+gloo-net = "0.7"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = "0.1"
-serde_json = "1"
-chrono-tz = { version = "0.9", features = ["serde"] }
+serde_json = "1.0"
+chrono-tz = { version = "0.10", features = ["serde"] }
 chrono = { version = "0.4", features = ["serde"] }

@@ -1,5 +1,6 @@
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos_router::hooks::use_params;
+use leptos_router::params::Params;
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -20,21 +21,20 @@ pub struct GalleryViewModel {
 
 #[component]
 pub fn Portfolio() -> impl IntoView {
-    let photos = create_resource(|| (), |_| async move { get_photos(1).await });
+    let photos = LocalResource::new(|| async move { get_photos(1).await });
 
     let photo_view = {
         move || {
             match photos.get() {
-                None => view! { <p>"Loading..."</p> }.into_view(),
+                None => view! { <p>"Loading..."</p> }.into_any(),
                 Some(data) => data
                     .photos
                     .into_iter()
                     .map(|photo| {
                         view! { <GalleryPiece photo/> }
                     })
-                    .collect_view(),
+                    .collect_view().into_any(),
             }
-            .into_view()
         }
     };
 
@@ -45,21 +45,20 @@ pub fn Portfolio() -> impl IntoView {
 pub fn GalleryPage() -> impl IntoView {
     let params = use_params::<GalleryParams>();
     let id = move || params.with(|params| params.as_ref().map(|params| params.id).unwrap_or(1));
-    let photos = create_resource(id, |value| async move { get_photos(value).await });
+    let photos = LocalResource::new(move || async move { get_photos(id()).await });
 
     let photo_view = {
         move || {
             match photos.get() {
-                None => view! { <p>"Loading..."</p> }.into_view(),
+                None => view! { <p>"Loading..."</p> }.into_any(),
                 Some(data) => data
                     .photos
                     .into_iter()
                     .map(|photo| {
                         view! { <GalleryPiece photo/> }
                     })
-                    .collect_view(),
+                    .collect_view().into_any(),
             }
-            .into_view()
         }
     };
 

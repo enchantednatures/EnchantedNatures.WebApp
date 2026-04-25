@@ -1,5 +1,6 @@
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos_router::components::{A, Route, Router, Routes};
+use leptos_router::path;
 mod api;
 pub mod components;
 pub mod directives;
@@ -11,10 +12,10 @@ use self::components::studio::StudioPage;
 
 #[component]
 pub fn App() -> impl IntoView {
-    let categories_resource = create_resource(|| (), |_| async move { get_categories().await });
+    let categories_resource = LocalResource::new(|| async move { get_categories().await });
     let categories = {
         move || match categories_resource.get() {
-            None => view! { <p>"Loading..."</p> }.into_view(),
+            None => view! { <p>"Loading..."</p> }.into_any(),
             Some(data) => data
                 .into_iter()
                 .map(|category| {
@@ -24,7 +25,7 @@ pub fn App() -> impl IntoView {
                         </li>
                     }
                 })
-                .collect_view(),
+                .collect_view().into_any(),
         }
     };
 
@@ -43,10 +44,10 @@ pub fn App() -> impl IntoView {
                         </div>
                     </nav>
                     <main>
-                        <Routes>
-                            <Route path="/" view=Portfolio/>
-                            <Route path="/gallery/:id" view=GalleryPage/>
-                            <Route path="/studio/:id" view=StudioPage/>
+                        <Routes fallback=|| view! { <p>"Not Found"</p> }>
+                            <Route path=path!("/") view=Portfolio/>
+                            <Route path=path!("/gallery/:id") view=GalleryPage/>
+                            <Route path=path!("/studio/:id") view=StudioPage/>
                         </Routes>
                     </main>
                 </Router>

@@ -1,10 +1,13 @@
-use leptos::ev::wheel;
-use leptos::html::AnyElement;
-use leptos::HtmlElement;
+use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
 
-pub fn horizontal_scroll(el: HtmlElement<AnyElement>) {
-    _ = el.clone().on(wheel, move |e| {
+pub fn horizontal_scroll(el: web_sys::Element) {
+    let html_el = el.dyn_ref::<web_sys::HtmlElement>().unwrap().clone();
+    let closure = Closure::wrap(Box::new(move |e: web_sys::WheelEvent| {
         e.prevent_default();
-        el.set_scroll_left(el.scroll_left() + e.delta_y() as i32);
-    });
+        html_el.set_scroll_left(html_el.scroll_left() + e.delta_y() as i32);
+    }) as Box<dyn FnMut(_)>);
+    el.add_event_listener_with_callback("wheel", closure.as_ref().unchecked_ref())
+        .unwrap();
+    closure.forget();
 }

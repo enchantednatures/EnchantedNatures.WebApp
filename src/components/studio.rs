@@ -1,5 +1,7 @@
-use leptos::*;
-use leptos_router::*;
+use leptos::prelude::*;
+use leptos::suspense::Transition;
+use leptos_router::hooks::use_params;
+use leptos_router::params::Params;
 
 use crate::get_photo;
 
@@ -12,8 +14,7 @@ struct StudioParams {
 pub fn StudioPage() -> impl IntoView {
     let params = use_params::<StudioParams>();
     let id = move || params.with(|params| params.as_ref().map(|params| params.id).unwrap_or(1));
-    let (_pending, set_pending) = create_signal(false);
-    let photo = create_resource(id, |value| async move { get_photo(value).await });
+    let photo = LocalResource::new(move || async move { get_photo(id()).await });
 
     view! {
         <Transition
@@ -24,8 +25,6 @@ pub fn StudioPage() -> impl IntoView {
                     </p>
                 }
             }
-
-            set_pending
         >
             {move || match photo.get() {
                 None => {
@@ -34,7 +33,7 @@ pub fn StudioPage() -> impl IntoView {
                             <em>Error</em>
                         </p>
                     }
-                        .into_view()
+                        .into_any()
                 }
                 Some(photo) => {
                     view! {
@@ -45,11 +44,11 @@ pub fn StudioPage() -> impl IntoView {
                                 src=photo.cloudflare_resource
                             />
                             <div class="offset-md-3 offset-lg-2">
-                                <p>{{ photo.location_taken }}</p>
+                                <p>{ photo.location_taken }</p>
                             </div>
                         </div>
                     }
-                        .into_view()
+                        .into_any()
                 }
             }}
 
