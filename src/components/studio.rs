@@ -1,3 +1,5 @@
+use chrono::prelude::*;
+use itertools::Itertools;
 use leptos::prelude::*;
 use leptos::suspense::Transition;
 use leptos_router::hooks::use_params;
@@ -17,15 +19,14 @@ pub fn StudioPage() -> impl IntoView {
     let photo = LocalResource::new(move || async move { get_photo(id()).await });
 
     view! {
-        <Transition
-            fallback=move || {
-                view! {
-                    <p>
-                        <em>"Loading..."</em>
-                    </p>
-                }
+        <Transition fallback=move || {
+            view! {
+                <p>
+                    <em>"Loading..."</em>
+                </p>
             }
-        >
+        }>
+
             {move || match photo.get() {
                 None => {
                     view! {
@@ -36,15 +37,24 @@ pub fn StudioPage() -> impl IntoView {
                         .into_any()
                 }
                 Some(photo) => {
+                    let description = vec![
+                        &photo.title,
+                        &photo.location_taken,
+                        &photo.date_taken.format("%e %B %Y").to_string(),
+                    ]
+                        .iter()
+                        .filter(|x| !x.is_empty())
+                        .join(" // ")
+                        .to_lowercase();
                     view! {
-                        <div class="gallery-body" id="studio-piece">
+                        <div class="studio-body">
                             <img
                                 alt=photo.title
-                                class="gallery-image"
+                                class="studio-image"
                                 src=photo.cloudflare_resource
                             />
-                            <div class="offset-md-3 offset-lg-2">
-                                <p>{ photo.location_taken }</p>
+                            <div class="studio-description">
+                                <p>{description}</p>
                             </div>
                         </div>
                     }
@@ -55,3 +65,4 @@ pub fn StudioPage() -> impl IntoView {
         </Transition>
     }
 }
+

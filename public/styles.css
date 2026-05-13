@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 html {
   position: relative;
   max-height: 99vh;
@@ -58,6 +58,14 @@ body {
   overflow: hidden;
 }
 
+
+.studio-image {
+  height: 93vh;
+  padding-right: 1vw;
+  object-fit: contain;
+  overflow: hidden;
+}
+
 .lunch-choice {
   object-fit: contain;
 }
@@ -79,6 +87,7 @@ span[data-href] {
 .copyright {
   position: center;
 }
+
 
 .controller-link {
   padding-left: 1vh;
@@ -104,3 +113,24 @@ span[data-href] {
   /*  display: none;*/
   /*}*/
 }
+
+
+.studio-body {
+  padding-left: 1vw;
+  padding-top: 1vh;
+  /* display: flex; */
+  /* overflow-x: scroll; */
+  scrollbar-width: none;
+
+  /*&::-webkit-scrollbar {*/
+  /*  display: none;*/
+  /*}*/
+}
+
+
+
+.studio-description{
+  position: center;
+  text-align: center;
+}
+
